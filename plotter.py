@@ -72,7 +72,7 @@ print("Hurst: ", hurst_h)
 data.to_csv(filename, index=False)
 
 #graph the data
-fig = px.line(data, x = 'Log N', y = 'Log RS', title=filename+' '+choose+'\'s. Hurst Exponent: '+str(hurst_h))
+fig = px.line(data, x = 'Log N', y = 'Log RS', title=filename+' '+choose+'\'s. Hurst Exponent: '+str(hurst_h), width=600, height=400)
 #fig = px.line(data, x = 'Date', y = 'Adj Close', title=filename+' '+choose+'\'s. Hurst Exponent: '+str(hurst_h))
 
 
