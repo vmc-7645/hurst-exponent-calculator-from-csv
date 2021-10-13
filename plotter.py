@@ -1,4 +1,4 @@
-#data taken from yahoo finance
+#data taken from yahoo finance for all stocks and cryptos listed
 import pandas as pd
 import plotly.express as px
 import numpy as np
