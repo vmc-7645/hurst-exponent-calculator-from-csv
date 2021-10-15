@@ -2,9 +2,10 @@
 import pandas as pd
 import plotly.express as px
 import numpy as np
+import math as m
 
 #file name
-filename = 'data/SBUX.csv'
+filename = 'data/MSFT.csv'
 
 #read data from csv file
 data = pd.read_csv(filename)
@@ -13,6 +14,18 @@ data = pd.read_csv(filename)
 choose = 'Adj Close'
 
 highs = data[choose]
+
+#adds percent relative value to dataframe
+def relativalue(ts):
+    ts = list(ts)
+    N = len(ts)
+    for i in range(1, N):
+        denom = ts[i-1]
+        if denom == 0:
+            denom = 0.0001
+        t = round(ts[i] / denom, 5)
+        data.at[i, (choose+' Relative Value')] = t
+    return ts
 
 #calculate the hurst exponent of a time series, modified from https://github.com/RyanWangZf/Hurst-exponent-R-S-analysis-/blob/master/Hurst.py
 def hurst(ts):
@@ -63,8 +76,9 @@ def hurst(ts):
     Hurst_exponent = np.polyfit(log_n,log_R_S,1)[0]
     return Hurst_exponent
 
-hurst_h = hurst(highs)
 
+h = relativalue(highs)
+hurst_h = h#hurst('Adj Close Relative Value')
 #print the hurst exponent
 print("Hurst: ", hurst_h)
 
@@ -72,9 +86,8 @@ print("Hurst: ", hurst_h)
 data.to_csv(filename, index=False)
 
 #graph the data
-fig = px.line(data, x = 'Log N', y = 'Log RS', title=filename+' '+choose+'\'s. Hurst Exponent: '+str(hurst_h), width=600, height=400)
+fig = px.line(data, x = 'Date', y = 'Adj Close Relative Value', title=filename+' '+choose+'\'s. Hurst Exponent: '+str(hurst_h), width=600, height=400)
 #fig = px.line(data, x = 'Date', y = 'Adj Close', title=filename+' '+choose+'\'s. Hurst Exponent: '+str(hurst_h))
-
 
 #plot the graph
 fig.show()
