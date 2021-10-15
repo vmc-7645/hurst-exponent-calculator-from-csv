@@ -78,7 +78,7 @@ def hurst(ts):
 
 
 h = relativalue(highs)
-hurst_h = h#hurst('Adj Close Relative Value')
+hurst_h = hurst(data['Adj Close Relative Value'])
 #print the hurst exponent
 print("Hurst: ", hurst_h)
 
@@ -86,7 +86,7 @@ print("Hurst: ", hurst_h)
 data.to_csv(filename, index=False)
 
 #graph the data
-fig = px.line(data, x = 'Date', y = 'Adj Close Relative Value', title=filename+' '+choose+'\'s. Hurst Exponent: '+str(hurst_h), width=600, height=400)
+fig = px.line(data, x = 'Log N', y = 'Log RS', title=filename+' '+choose+'\'s. Hurst Exponent: '+str(hurst_h), width=600, height=400)
 #fig = px.line(data, x = 'Date', y = 'Adj Close', title=filename+' '+choose+'\'s. Hurst Exponent: '+str(hurst_h))
 
 #plot the graph
